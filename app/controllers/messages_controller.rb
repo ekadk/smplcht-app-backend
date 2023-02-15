@@ -19,6 +19,7 @@ class MessagesController < ApplicationController
 
     if @message.save
       render json: @message, status: :created, location: @message
+      RoomChannel.broadcast_to @room, @message
     else
       render json: @message.errors, status: :unprocessable_entity
     end
